@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>凍腦時間 · 頻道成效看板</title>
-<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, no-transform, max-age=0, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta http-equiv="Expires" content="0">
 <style>
   :root {
@@ -122,14 +123,7 @@
   <div class="card">
     <table>
       <thead><tr><th>日期</th><th>狀態</th><th>動作</th><th>說明</th></tr></thead>
-      <tbody id="changelog">[
-  {
-    "date": "2026-08-19",
-    "applied": false,
-    "action": "測試（驗證機制）",
-    "detail": "模擬數據足夠：將 09:00 Short 排程 topic 改為「動物冷知識」(top_topic)。此為機制驗證，隨後會還原。【此為驗證用測試紀錄，排程已還原，不影響實際經營】"
-  }
-]</tbody>
+      <tbody id="changelog">[]</tbody>
     </table>
   </div>
 
@@ -148,14 +142,7 @@
   let VIEW_HISTORY = [["2026-08-19",0]];
   if (!Array.isArray(VIEW_HISTORY)) VIEW_HISTORY = [];
   // 策略改動紀錄快照（開啟時會以 GitHub raw 即時更新）
-  let STRAT = [
-  {
-    "date": "2026-08-19",
-    "applied": false,
-    "action": "測試（驗證機制）",
-    "detail": "模擬數據足夠：將 09:00 Short 排程 topic 改為「動物冷知識」(top_topic)。此為機制驗證，隨後會還原。【此為驗證用測試紀錄，排程已還原，不影響實際經營】"
-  }
-];
+  let STRAT = [];
   if (!Array.isArray(STRAT)) STRAT = [];
 
   function renderChanges() {
@@ -170,7 +157,7 @@
 
   async function loadChanges(liveViews) {
     try {
-      const r = await fetch('https://raw.githubusercontent.com/zxc89123/cold-facts-dashboard/master/strategy-changes.json?ts=' + Date.now()).then(x=>x.json());
+      const r = await fetch('https://raw.githubusercontent.com/zxc89123/cold-facts-dashboard/master/strategy-changes.json?ts=' + Date.now(), {cache:'no-store'}).then(x=>x.json());
       if (Array.isArray(r) && r.length) STRAT = r;
     } catch(e) {}
     renderChanges();
@@ -253,7 +240,7 @@
       return; // 未設定 API key，保留快照
     }
     try {
-      const ch = await fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id='+CHANNEL_ID+'&key='+YT_KEY).then(r=>r.json());
+      const ch = await fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id='+CHANNEL_ID+'&key='+YT_KEY+'&cb='+Date.now(), {cache:'no-store'}).then(r=>r.json());
       const st = ch.items && ch.items[0] && ch.items[0].statistics || {};
       const subs = +(st.subscriberCount||0), vids = +(st.videoCount||0), views = +(st.viewCount||0);
       liveViews = views;
@@ -262,11 +249,11 @@
       document.getElementById('views').textContent = fmt(views);
       document.getElementById('avg').textContent = vids>0 ? fmt(Math.round(views/vids)) : '0';
 
-      const list = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='+CHANNEL_ID+'&maxResults=15&order=date&type=video&key='+YT_KEY).then(r=>r.json());
+      const list = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='+CHANNEL_ID+'&maxResults=15&order=date&type=video&key='+YT_KEY+'&cb='+Date.now(), {cache:'no-store'}).then(r=>r.json());
       const ids = (list.items||[]).map(v=>v.id.videoId).join(',');
       let stats = {};
       if (ids) {
-        const vd = await fetch('https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+ids+'&key='+YT_KEY).then(r=>r.json());
+        const vd = await fetch('https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+ids+'&key='+YT_KEY+'&cb='+Date.now(), {cache:'no-store'}).then(r=>r.json());
         (vd.items||[]).forEach(v => stats[v.id] = v.statistics || {});
       }
       let likes=0, comments=0, today=0, rows='';
