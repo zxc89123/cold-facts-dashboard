@@ -6,64 +6,42 @@
 <title>凍腦時間 · 頻道成效看板</title>
 <style>
   :root {
-    --bg: #0b1020;
-    --card: #141a2e;
-    --card2: #1a2240;
-    --line: #2a3354;
-    --txt: #e8ecf8;
-    --muted: #8b93b5;
-    --acc: #38bdf8;
-    --green: #34d399;
-    --amber: #fbbf24;
-    --red: #f87171;
+    --bg: #0b1020; --card: #141a2e; --card2: #1a2240; --line: #2a3354;
+    --txt: #e8ecf8; --muted: #8b93b5; --acc: #38bdf8; --green: #34d399;
+    --amber: #fbbf24; --red: #f87171;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', -apple-system, 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-    background: var(--bg);
-    color: var(--txt);
-    padding: 24px;
+    background: var(--bg); color: var(--txt); padding: 24px;
   }
-  .wrap { max-width: 1000px; margin: 0 auto; }
-  header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 24px;
-  }
-  h1 {
-    font-size: 26px;
-    background: linear-gradient(90deg, #38bdf8, #818cf8);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 26px; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
   .updated { color: var(--muted); font-size: 12px; text-align: right; }
-  .badge {
-    display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px;
-    background: var(--acc); color: #04222f; font-weight: 600;
-  }
-  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
-  .mcard { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-  .mcard .label { color: var(--muted); font-size: 13px; }
-  .mcard .value { font-size: 34px; font-weight: 700; margin-top: 6px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; background: var(--acc); color: #04222f; font-weight: 600; }
+  .section-title { font-size: 15px; color: var(--muted); margin: 22px 0 10px; font-weight: 600; letter-spacing: .5px; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+  .mcard { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .mcard .label { color: var(--muted); font-size: 12px; }
+  .mcard .value { font-size: 26px; font-weight: 700; margin-top: 6px; }
   .mcard .delta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .mcard.accent { border-color: var(--acc); }
   h2 { font-size: 16px; margin: 26px 0 12px; color: var(--txt); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th { color: var(--muted); text-align: left; font-weight: 500; padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 12px; }
-  td { padding: 12px 8px; border-bottom: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { color: var(--muted); text-align: left; font-weight: 500; padding: 9px 7px; border-bottom: 1px solid var(--line); font-size: 11px; }
+  td { padding: 11px 7px; border-bottom: 1px solid var(--line); }
   tr:last-child td { border-bottom: none; }
   .empty { color: var(--muted); text-align: center; padding: 26px; font-size: 14px; }
+  .num { text-align: right; }
   .sched { display: grid; gap: 10px; }
-  .srow {
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--card2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px;
-  }
+  .srow { display: flex; justify-content: space-between; align-items: center; background: var(--card2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
   .srow .time { font-weight: 700; min-width: 70px; }
   .srow .task { color: var(--txt); flex: 1; margin-left: 14px; }
   .srow .st { color: var(--green); font-size: 13px; }
-  .note {
-    background: rgba(56,189,248,.08); border: 1px solid var(--line); border-radius: 10px;
-    padding: 14px 16px; color: var(--muted); font-size: 13px; margin-top: 16px; line-height: 1.7;
-  }
+  .note { background: rgba(56,189,248,.08); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; color: var(--muted); font-size: 13px; margin-top: 16px; line-height: 1.7; }
   footer { color: var(--muted); font-size: 12px; text-align: center; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); }
 </style>
 </head>
@@ -76,24 +54,27 @@
     </div>
     <div class="updated">
       <span class="badge">AUTO</span><br>
-      更新：<span id="ts">—</span>
+      更新：<span id="ts">2026-08-19 22:07</span>
     </div>
   </header>
 
+  <div class="section-title">📊 頻道總覽</div>
   <div class="metrics">
-    <div class="mcard"><div class="label">訂閱數</div><div class="value" id="subs">0</div><div class="delta">–</div></div>
-    <div class="mcard"><div class="label">影片數</div><div class="value" id="vids">0</div><div class="delta">–</div></div>
-    <div class="mcard"><div class="label">總觀看</div><div class="value" id="views">0</div><div class="delta">–</div></div>
-    <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">0</div><div class="delta" id="todaynote">待首支片</div></div>
+    <div class="mcard accent"><div class="label">訂閱數</div><div class="value">0</div></div>
+    <div class="mcard"><div class="label">影片數</div><div class="value">0</div></div>
+    <div class="mcard"><div class="label">總觀看</div><div class="value">0</div></div>
+    <div class="mcard"><div class="label">今日新片</div><div class="value">0</div><div class="delta" id="todaynote">待首支片</div></div>
+    <div class="mcard"><div class="label">平均觀看/片</div><div class="value">0</div></div>
+    <div class="mcard"><div class="label">互動率</div><div class="value">0%</div><div class="delta">(讚+留言)/觀看</div></div>
+    <div class="mcard"><div class="label">讚總數</div><div class="value">0</div></div>
+    <div class="mcard"><div class="label">留言總數</div><div class="value">0</div></div>
   </div>
 
   <h2>📹 最近影片</h2>
   <div class="card">
     <table>
-      <thead><tr><th>標題</th><th>上線時間</th><th>觀看</th><th>讚</th><th>留言</th></tr></thead>
-      <tbody id="vbody">
-        <tr><td colspan="5" class="empty">尚無影片 — 首支排程 Short 將於明日 09:07 自動上線</td></tr>
-      </tbody>
+      <thead><tr><th>標題</th><th>上線時間</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">互動率</th></tr></thead>
+      <tbody id="vbody"><tr><td colspan="6" class="empty">尚無影片 — 首支排程 Short 將於明日 09:07 自動上線</td></tr></tbody>
     </table>
   </div>
 
@@ -107,14 +88,10 @@
   </div>
 
   <div class="note">
-    💡 <b>說明：</b>本看板為即時成效總覽。目前頻道為空（待首支排程片上線）。若要刷新成效，請說「更新成效看板」，我會重新抓取 YouTube 最新數據並更新此頁。
+    💡 <b>說明：</b>互動率 = (讚 + 留言) / 觀看數。觀看時長屬 YouTube Analytics 數據，目前連線未提供，故以平均觀看與互動率替代。看板每晚自動更新並同步至 GitHub Pages。
   </div>
 
   <footer>凍腦時間 · 自動化經營看板 · 由 CREAO 自動產生</footer>
 </div>
-
-<script>
-  document.getElementById('ts').textContent = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-</script>
 </body>
 </html>
