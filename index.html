@@ -102,6 +102,27 @@
     <div class="srow"><div class="time">21:35</div><div class="task">🔥 熱門趨勢選題（美區 US 掃描）· 自動上傳</div><div class="st">● 運行中</div></div>
   </div>
 
+  <div class="section-title">🛠️ 策略自動套用</div>
+  <div class="card sched">
+    <div class="srow"><div class="time">開關</div><div class="task">每週策略檢討後自動調整影片工廠排程（長/短片格式、最佳主題）</div><div class="st">● 啟用</div></div>
+    <div class="srow"><div class="time">守門</div><div class="task">總觀看 ≥ 100 · 有數據影片 ≥ 3 · 某格式領先 ≥ 20%</div><div class="st" id="guardstate">檢視中…</div></div>
+  </div>
+
+  <h2>📝 改動紀錄</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>日期</th><th>狀態</th><th>動作</th><th>說明</th></tr></thead>
+      <tbody id="changelog">[
+  {
+    "date": "2026-08-19",
+    "applied": true,
+    "action": "測試-自動套用",
+    "detail": "模擬數據足夠：將 09:00 Short 排程 topic 改為「動物冷知識」(top_topic)。此為機制驗證，隨後會還原。"
+  }
+]</tbody>
+    </table>
+  </div>
+
   <div class="note">
     💡 <b>即時更新：</b>本頁開啟時會自動抓取 YouTube 最新數據（訂閱、影片、觀看、互動）。近 7 天趨勢由每日追蹤快照累積，開啟時會以即時總觀看補上今天。
   </div>
@@ -113,9 +134,39 @@
   // 每次開啟網頁自動抓取 YouTube 最新數據
   const YT_KEY = 'AIzaSyBtIQkSpOwkL1_FxkC_c-wt4e6tAehfnLs';      // 由 CREAO 填入 YouTube Data API key
   const CHANNEL_ID = 'UCyoNtzqTWQ70yEhwZuSesBQ';
-  // 歷史快照：[[date, total_views], ...]，由每日追蹤累積，由每日追蹤累積填入
+  // 歷史快照：[[date, total_views], ...]，由每日追蹤累積填入
   let VIEW_HISTORY = [["2026-08-19",0]];
   if (!Array.isArray(VIEW_HISTORY)) VIEW_HISTORY = [];
+  // 策略改動紀錄快照（開啟時會以 GitHub raw 即時更新）
+  let STRAT = [
+  {
+    "date": "2026-08-19",
+    "applied": true,
+    "action": "測試-自動套用",
+    "detail": "模擬數據足夠：將 09:00 Short 排程 topic 改為「動物冷知識」(top_topic)。此為機制驗證，隨後會還原。"
+  }
+];
+  if (!Array.isArray(STRAT)) STRAT = [];
+
+  function renderChanges() {
+    const tbody = document.getElementById('changelog');
+    if (!tbody) return;
+    if (!STRAT.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty">尚無改動紀錄</td></tr>'; return; }
+    tbody.innerHTML = STRAT.slice().reverse().map(c => {
+      const st = c.applied ? '<span style="color:var(--green)">已套用</span>' : '<span style="color:var(--muted)">未變更</span>';
+      return '<tr><td>'+esc(c.date||'')+'</td><td>'+st+'</td><td>'+esc(c.action||'')+'</td><td>'+esc(c.detail||'')+'</td></tr>';
+    }).join('');
+  }
+
+  async function loadChanges(liveViews) {
+    try {
+      const r = await fetch('https://raw.githubusercontent.com/zxc89123/cold-facts-dashboard/master/strategy-changes.json').then(x=>x.json());
+      if (Array.isArray(r) && r.length) STRAT = r;
+    } catch(e) {}
+    renderChanges();
+    const g = document.getElementById('guardstate');
+    if (g) g.textContent = (liveViews != null && liveViews >= 100) ? '已達門檻，可自動套用' : '數據累積中（未達門檻）';
+  }
 
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   function fmt(n){ n = Number(n); if(isNaN(n)) return '0'; if(n>=10000) return (n/10000).toFixed(1)+'萬'; return n.toLocaleString('zh-TW'); }
@@ -198,6 +249,7 @@
       document.getElementById('liveBadge').textContent = '快照';
     }
     renderTrend(liveViews);
+    loadChanges(liveViews);
   }
   load();
 </script>
