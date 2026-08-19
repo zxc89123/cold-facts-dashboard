@@ -11,16 +11,14 @@
     --amber: #fbbf24; --red: #f87171;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', -apple-system, 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-    background: var(--bg); color: var(--txt); padding: 24px;
-  }
+  body { font-family: 'Segoe UI', -apple-system, 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; background: var(--bg); color: var(--txt); padding: 24px; }
   .wrap { max-width: 1040px; margin: 0 auto; }
   header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 24px; }
   h1 { font-size: 26px; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
   .updated { color: var(--muted); font-size: 12px; text-align: right; }
   .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; background: var(--acc); color: #04222f; font-weight: 600; }
+  .badge.live { background: var(--green); color: #04222f; }
   .section-title { font-size: 15px; color: var(--muted); margin: 22px 0 10px; font-weight: 600; letter-spacing: .5px; }
   .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
   .mcard { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
@@ -53,29 +51,28 @@
       <div class="sub">冷知識 YouTube 頻道 · 全自動經營</div>
     </div>
     <div class="updated">
-      <span class="badge">AUTO</span><br>
-      更新：<span id="ts">2026-08-19 22:12</span>
+      <span class="badge live" id="liveBadge">即時</span><br>
+      更新：<span id="ts">載入中…</span>
     </div>
   </header>
 
   <div class="section-title">📊 頻道總覽</div>
   <div class="metrics">
-    <div class="mcard accent"><div class="label">訂閱數</div><div class="value">0</div></div>
-    <div class="mcard"><div class="label">影片數</div><div class="value">2</div></div>
-    <div class="mcard"><div class="label">總觀看</div><div class="value">0</div></div>
-    <div class="mcard"><div class="label">今日新片</div><div class="value">2</div><div class="delta" id="todaynote">今天 2 支上線</div></div>
-    <div class="mcard"><div class="label">平均觀看/片</div><div class="value">0</div></div>
-    <div class="mcard"><div class="label">互動率</div><div class="value">0%</div><div class="delta">(讚+留言)/觀看</div></div>
-    <div class="mcard"><div class="label">讚總數</div><div class="value">0</div></div>
-    <div class="mcard"><div class="label">留言總數</div><div class="value">0</div></div>
+    <div class="mcard accent"><div class="label">訂閱數</div><div class="value" id="subs">__SUBS__</div></div>
+    <div class="mcard"><div class="label">影片數</div><div class="value" id="vids">__VIDS__</div></div>
+    <div class="mcard"><div class="label">總觀看</div><div class="value" id="views">__VIEWS__</div></div>
+    <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">__TODAY__</div><div class="delta" id="todaynote">__TODAYNOTE__</div></div>
+    <div class="mcard"><div class="label">平均觀看/片</div><div class="value" id="avg">__AVG_VIEWS__</div></div>
+    <div class="mcard"><div class="label">互動率</div><div class="value" id="eng">__ENGAGEMENT__</div><div class="delta">(讚+留言)/觀看</div></div>
+    <div class="mcard"><div class="label">讚總數</div><div class="value" id="likes">__LIKES__</div></div>
+    <div class="mcard"><div class="label">留言總數</div><div class="value" id="comments">__COMMENTS__</div></div>
   </div>
 
   <h2>📹 最近影片</h2>
   <div class="card">
     <table>
       <thead><tr><th>標題</th><th>上線時間</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">互動率</th></tr></thead>
-      <tbody id="vbody"><tr><td>世上真的沒有兩枚一模一樣的指紋？</td><td>2026-08-19</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr>
-<tr><td>x</td><td>2026-08-19</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr></tbody>
+      <tbody id="vbody">__VIDEO_ROWS__</tbody>
     </table>
   </div>
 
@@ -89,10 +86,70 @@
   </div>
 
   <div class="note">
-    💡 <b>說明：</b>互動率 = (讚 + 留言) / 觀看數。觀看時長屬 YouTube Analytics 數據，目前連線未提供，故以平均觀看與互動率替代。看板每晚自動更新並同步至 GitHub Pages。
+    💡 <b>即時更新：</b>本頁開啟時會自動抓取 YouTube 最新數據（訂閱、影片、觀看、互動），無需手動整理。若顯示「載入中」代表 API 尚未設定或無法連線，會保留上次快照。
   </div>
 
   <footer>凍腦時間 · 自動化經營看板 · 由 CREAO 自動產生</footer>
 </div>
+
+<script>
+  // 每次開啟網頁自動抓取 YouTube 最新數據
+  const YT_KEY = 'AIzaSyBtIQkSpOwkL1_FxkC_c-wt4e6tAehfnLs';      // 由 CREAO 填入 YouTube Data API key
+  const CHANNEL_ID = 'UCyoNtzqTWQ70yEhwZuSesBQ';
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function fmt(n){ n = Number(n); if(isNaN(n)) return '0'; if(n>=10000) return (n/10000).toFixed(1)+'萬'; return n.toLocaleString('zh-TW'); }
+
+  async function load() {
+    document.getElementById('ts').textContent = new Date().toLocaleString('zh-TW', {timeZone:'Asia/Taipei'});
+    if (!YT_KEY || YT_KEY.indexOf('__YOUTUBE') === 0) {
+      document.getElementById('liveBadge').textContent = '快照';
+      return; // 未設定 API key，保留快照
+    }
+    try {
+      // 頻道統計
+      const ch = await fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id='+CHANNEL_ID+'&key='+YT_KEY).then(r=>r.json());
+      const st = ch.items && ch.items[0] && ch.items[0].statistics || {};
+      const subs = +(st.subscriberCount||0), vids = +(st.videoCount||0), views = +(st.viewCount||0);
+      document.getElementById('subs').textContent = fmt(subs);
+      document.getElementById('vids').textContent = fmt(vids);
+      document.getElementById('views').textContent = fmt(views);
+      document.getElementById('avg').textContent = vids>0 ? fmt(Math.round(views/vids)) : '0';
+
+      // 最近影片
+      const list = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='+CHANNEL_ID+'&maxResults=15&order=date&type=video&key='+YT_KEY).then(r=>r.json());
+      const ids = (list.items||[]).map(v=>v.id.videoId).join(',');
+      let stats = {};
+      if (ids) {
+        const vd = await fetch('https://www.googleapis.com/youtube/v3/videos?part=statistics&id='+ids+'&key='+YT_KEY).then(r=>r.json());
+        (vd.items||[]).forEach(v => stats[v.id] = v.statistics || {});
+      }
+      let likes=0, comments=0, today=0, rows='';
+      const now = new Date();
+      (list.items||[]).forEach(v => {
+        const vid = v.id.videoId;
+        const s = stats[vid]||{};
+        const view = +(s.viewCount||0), lk = +(s.likeCount||0), cm = +(s.commentCount||0);
+        likes += lk; comments += cm;
+        const d = new Date(v.snippet.publishedAt);
+        const isToday = d.toDateString() === now.toDateString();
+        if (isToday) today++;
+        const eng = view>0 ? ((lk+cm)/view*100).toFixed(1)+'%' : '0%';
+        rows += '<tr><td>'+esc(v.snippet.title)+'</td><td>'+d.toLocaleDateString('zh-TW')+'</td><td class="num">'+fmt(view)+'</td><td class="num">'+fmt(lk)+'</td><td class="num">'+fmt(cm)+'</td><td class="num">'+eng+'</td></tr>';
+      });
+      if (!rows) rows = '<tr><td colspan="6" class="empty">尚無影片</td></tr>';
+      document.getElementById('vbody').innerHTML = rows;
+      document.getElementById('today').textContent = today;
+      document.getElementById('todaynote').textContent = today>0 ? '今天 '+today+' 支上線' : '今天尚無新片';
+      document.getElementById('likes').textContent = fmt(likes);
+      document.getElementById('comments').textContent = fmt(comments);
+      document.getElementById('eng').textContent = views>0 ? ((likes+comments)/views*100).toFixed(1)+'%' : '0%';
+      document.getElementById('liveBadge').textContent = '即時';
+    } catch(e) {
+      document.getElementById('liveBadge').textContent = '快照';
+    }
+  }
+  load();
+</script>
 </body>
 </html>
