@@ -76,6 +76,8 @@
     <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">__TODAY__</div><div class="delta" id="todaynote">__TODAYNOTE__</div></div>
     <div class="mcard"><div class="label">平均觀看/片</div><div class="value" id="avg">__AVG_VIEWS__</div></div>
     <div class="mcard"><div class="label">互動率</div><div class="value" id="eng">__ENGAGEMENT__</div><div class="delta">(讚+留言)/觀看</div></div>
+    <div class="mcard accent"><div class="label">平均觀看時間</div><div class="value" id="avgdur">—</div><div class="delta">每晚瀏覽器讀取</div></div>
+    <div class="mcard accent"><div class="label">平均觀看百分比</div><div class="value" id="avgpct">—</div><div class="delta">瀏覽器讀取</div></div>
     <div class="mcard"><div class="label">讚總數</div><div class="value" id="likes">__LIKES__</div></div>
     <div class="mcard"><div class="label">留言總數</div><div class="value" id="comments">__COMMENTS__</div></div>
   </div>
@@ -99,7 +101,7 @@
       <thead><tr><th>標題</th><th>上線時間</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">互動率</th></tr></thead>
       <tbody id="vbody">__VIDEO_ROWS__</tbody>
     </table>
-    <div class="tnote">📏 每片「觀看時長」需 YouTube Analytics API（目前未連線），故不顯示、不偽造；以互動率與平均觀看作為替代指標。</div>
+    <div class="tnote">📏 「平均觀看時間／平均觀看百分比」由每晚追蹤 Agent 透過瀏覽器讀取 YouTube Studio Analytics 取得。若顯示「需重新登入」，表示瀏覽器登入已過期，需重新登入後恢復。</div>
   </div>
 
   <h2>🤖 自動經營排程</h2>
