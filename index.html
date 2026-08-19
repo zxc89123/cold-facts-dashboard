@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>凍腦時間 · 頻道成效看板</title>
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <style>
   :root {
     --bg: #0b1020; --card: #141a2e; --card2: #1a2240; --line: #2a3354;
@@ -105,7 +108,7 @@
   <div class="section-title">🛠️ 策略自動套用</div>
   <div class="card sched">
     <div class="srow"><div class="time">開關</div><div class="task">每週策略檢討後自動調整影片工廠排程（長/短片格式、最佳主題）</div><div class="st">● 啟用</div></div>
-    <div class="srow"><div class="time">守門</div><div class="task">總觀看 ≥ 100 · 有數據影片 ≥ 3 · 某格式領先 ≥ 20%</div><div class="st" id="guardstate">檢視中…</div></div>
+    <div class="srow"><div class="time">守門</div><div class="task">總觀看 ≥ 500 · 有數據影片 ≥ 5 · 某格式領先 ≥ 30%</div><div class="st" id="guardstate">檢視中…</div></div>
   </div>
 
   <h2>📝 改動紀錄</h2>
@@ -160,12 +163,12 @@
 
   async function loadChanges(liveViews) {
     try {
-      const r = await fetch('https://raw.githubusercontent.com/zxc89123/cold-facts-dashboard/master/strategy-changes.json').then(x=>x.json());
+      const r = await fetch('https://raw.githubusercontent.com/zxc89123/cold-facts-dashboard/master/strategy-changes.json?ts=' + Date.now()).then(x=>x.json());
       if (Array.isArray(r) && r.length) STRAT = r;
     } catch(e) {}
     renderChanges();
     const g = document.getElementById('guardstate');
-    if (g) g.textContent = (liveViews != null && liveViews >= 100) ? '已達門檻，可自動套用' : '數據累積中（未達門檻）';
+    if (g) g.textContent = (liveViews != null && liveViews >= 500) ? '已達門檻，可自動套用' : '數據累積中（未達門檻）';
   }
 
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
