@@ -34,12 +34,20 @@
   tr:last-child td { border-bottom: none; }
   .empty { color: var(--muted); text-align: center; padding: 26px; font-size: 14px; }
   .num { text-align: right; }
+  .trend { display: flex; align-items: flex-end; gap: 10px; height: 180px; padding: 10px 4px 0; }
+  .tcol { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .tbar { width: 100%; max-width: 44px; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, var(--acc), #6366f1); min-height: 2px; transition: height .5s; }
+  .tval { font-size: 11px; color: var(--txt); margin-bottom: 4px; font-weight: 600; }
+  .tday { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .tnote { font-size: 12px; color: var(--muted); margin-top: 14px; }
   .sched { display: grid; gap: 10px; }
   .srow { display: flex; justify-content: space-between; align-items: center; background: var(--card2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
   .srow .time { font-weight: 700; min-width: 70px; }
   .srow .task { color: var(--txt); flex: 1; margin-left: 14px; }
   .srow .st { color: var(--green); font-size: 13px; }
+  .srow .st.dim { color: var(--muted); }
   .note { background: rgba(56,189,248,.08); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; color: var(--muted); font-size: 13px; margin-top: 16px; line-height: 1.7; }
+  .note.warn { background: rgba(251,191,36,.08); border-color: var(--line); }
   footer { color: var(--muted); font-size: 12px; text-align: center; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); }
 </style>
 </head>
@@ -68,12 +76,19 @@
     <div class="mcard"><div class="label">留言總數</div><div class="value" id="comments">__COMMENTS__</div></div>
   </div>
 
+  <div class="section-title">📈 近 7 天觀看趨勢</div>
+  <div class="card">
+    <div class="trend" id="trend"></div>
+    <div class="tnote" id="trendnote">資料由每日自動追蹤累積，連續經營後趨勢會逐日填充。</div>
+  </div>
+
   <h2>📹 最近影片</h2>
   <div class="card">
     <table>
       <thead><tr><th>標題</th><th>上線時間</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">互動率</th></tr></thead>
       <tbody id="vbody">__VIDEO_ROWS__</tbody>
     </table>
+    <div class="tnote">📏 每片「觀看時長」需 YouTube Analytics API（目前未連線），故不顯示、不偽造；以互動率與平均觀看作為替代指標。</div>
   </div>
 
   <h2>🤖 自動經營排程</h2>
@@ -81,12 +96,14 @@
     <div class="srow"><div class="time">09:00</div><div class="task">🎲 隨機 Short #1 · 自動上傳</div><div class="st">● 運行中</div></div>
     <div class="srow"><div class="time">14:00</div><div class="task">🎲 隨機 Short #2 · 自動上傳</div><div class="st">● 運行中</div></div>
     <div class="srow"><div class="time">20:00</div><div class="task">🎲 隨機 Short #3 · 自動上傳</div><div class="st">● 運行中</div></div>
+    <div class="srow"><div class="time">週三 19:00</div><div class="task">📺 長片 #1（深度冷知識）· 自動上傳</div><div class="st">● 運行中</div></div>
+    <div class="srow"><div class="time">週六 12:00</div><div class="task">📺 長片 #2（深度冷知識）· 自動上傳</div><div class="st">● 運行中</div></div>
     <div class="srow"><div class="time">21:30</div><div class="task">📊 數據追蹤（當天新片 + 頻道總覽）</div><div class="st">● 運行中</div></div>
     <div class="srow"><div class="time">21:35</div><div class="task">🔥 熱門趨勢選題（美區 US 掃描）· 自動上傳</div><div class="st">● 運行中</div></div>
   </div>
 
   <div class="note">
-    💡 <b>即時更新：</b>本頁開啟時會自動抓取 YouTube 最新數據（訂閱、影片、觀看、互動），無需手動整理。若顯示「載入中」代表 API 尚未設定或無法連線，會保留上次快照。
+    💡 <b>即時更新：</b>本頁開啟時會自動抓取 YouTube 最新數據（訂閱、影片、觀看、互動）。近 7 天趨勢由每日追蹤快照累積，開啟時會以即時總觀看補上今天。
   </div>
 
   <footer>凍腦時間 · 自動化經營看板 · 由 CREAO 自動產生</footer>
@@ -96,27 +113,59 @@
   // 每次開啟網頁自動抓取 YouTube 最新數據
   const YT_KEY = 'AIzaSyBtIQkSpOwkL1_FxkC_c-wt4e6tAehfnLs';      // 由 CREAO 填入 YouTube Data API key
   const CHANNEL_ID = 'UCyoNtzqTWQ70yEhwZuSesBQ';
+  // 歷史快照：[[date, total_views], ...]，由每日追蹤累積，由每日追蹤累積填入
+  let VIEW_HISTORY = [["2026-08-19",0]];
+  if (!Array.isArray(VIEW_HISTORY)) VIEW_HISTORY = [];
 
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   function fmt(n){ n = Number(n); if(isNaN(n)) return '0'; if(n>=10000) return (n/10000).toFixed(1)+'萬'; return n.toLocaleString('zh-TW'); }
 
+  function renderTrend(liveViews) {
+    const el = document.getElementById('trend');
+    if (!el) return;
+    // 確保今天有資料點
+    const today = new Date().toISOString().slice(0,10);
+    let last = VIEW_HISTORY[VIEW_HISTORY.length-1];
+    if (!last || last[0] !== today) {
+      VIEW_HISTORY.push([today, liveViews != null ? liveViews : (last?last[1]:0)]);
+    } else if (liveViews != null) {
+      last[1] = Math.max(last[1], liveViews);
+    }
+    // 取近 7 天
+    const last7 = VIEW_HISTORY.slice(-7);
+    if (last7.length === 0) { el.innerHTML = '<div class="empty" style="width:100%">尚無趨勢資料，明日開始累積</div>'; return; }
+    // 每日增量 = 當天總觀看 - 前一天總觀看
+    const deltas = last7.map((d,i) => {
+      const prev = i>0 ? last7[i-1][1] : 0;
+      return { day: d[0], views: Math.max(0, (Number(d[1])||0) - (Number(prev)||0)) };
+    });
+    const max = Math.max(1, ...deltas.map(d=>d.views));
+    el.innerHTML = deltas.map(d => {
+      const h = Math.round((d.views / max) * 100);
+      const short = d.day.slice(5).replace('-','/');
+      return '<div class="tcol"><div class="tval">'+fmt(d.views)+'</div><div class="tbar" style="height:'+h+'%"></div><div class="tday">'+short+'</div></div>';
+    }).join('');
+    document.getElementById('trendnote').textContent = '近 7 天每日新增觀看（由追蹤快照累積計算）';
+  }
+
   async function load() {
     document.getElementById('ts').textContent = new Date().toLocaleString('zh-TW', {timeZone:'Asia/Taipei'});
+    let liveViews = null;
     if (!YT_KEY || YT_KEY.indexOf('__YOUTUBE') === 0) {
       document.getElementById('liveBadge').textContent = '快照';
+      renderTrend(null);
       return; // 未設定 API key，保留快照
     }
     try {
-      // 頻道統計
       const ch = await fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id='+CHANNEL_ID+'&key='+YT_KEY).then(r=>r.json());
       const st = ch.items && ch.items[0] && ch.items[0].statistics || {};
       const subs = +(st.subscriberCount||0), vids = +(st.videoCount||0), views = +(st.viewCount||0);
+      liveViews = views;
       document.getElementById('subs').textContent = fmt(subs);
       document.getElementById('vids').textContent = fmt(vids);
       document.getElementById('views').textContent = fmt(views);
       document.getElementById('avg').textContent = vids>0 ? fmt(Math.round(views/vids)) : '0';
 
-      // 最近影片
       const list = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='+CHANNEL_ID+'&maxResults=15&order=date&type=video&key='+YT_KEY).then(r=>r.json());
       const ids = (list.items||[]).map(v=>v.id.videoId).join(',');
       let stats = {};
@@ -148,6 +197,7 @@
     } catch(e) {
       document.getElementById('liveBadge').textContent = '快照';
     }
+    renderTrend(liveViews);
   }
   load();
 </script>
