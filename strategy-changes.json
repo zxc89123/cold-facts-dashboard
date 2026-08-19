@@ -1,0 +1,8 @@
+[
+  {
+    "date": "2026-08-19",
+    "applied": true,
+    "action": "測試-自動套用",
+    "detail": "模擬數據足夠：將 09:00 Short 排程 topic 改為「動物冷知識」(top_topic)。此為機制驗證，隨後會還原。"
+  }
+]
