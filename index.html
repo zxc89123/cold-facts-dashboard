@@ -1,0 +1,193 @@
+
+<!DOCTYPEDOCTYPE html>
+<html html>
+<html lang=" lang="zh-Hant">
+zh-Hant">
+<head>
+<meta charset="UTF<head>
+<meta charset="UTF-8-8">
+<meta name="">
+<meta name="viewportviewport"" content="width=device content="width=device-width, initial-width, initial-scale=1-scale=1.0.0">
+">
+<title<title>凍腦時間 · 頻道>凍腦時間 · 頻道成效看板</title成效看板</title>
+>
+<style>
+  :root<style>
+  :root{
+{
+    --bg:#    --bg:#0b0b1020;1020; -- --card:#card:#141a141a2e2e;; --card --card22:#1a224:#1a22400; --line:#; --line:#22aa3353354;
+   4;
+    --txt:# --txt:#ee8ec8ecf8;f8; -- --mutedmuted:#8:#8b93b93b5b5; --; --accacc:#:#3838bbdf8; --greendf8; --green:#34:#d34d399399;; --amber --amber:#fbbf24;:#fbbf24; --red:#f87171 --red:#f87171;
+  }
+  *{;
+  }
+  *{boxbox-sizing-sizing:border-box;:border-box; margin: margin:0; padding:0; padding:00;}
+;}
+   body body{{font-familyfont-family:':'SegSegoeoe UI UI',',-apple-apple-system,'-system,'Noto Sans TC','Noto Sans TC','Microsoft JMicrosoft JhengHehengHei',i',ssansans-serif-serif;; background:var(--bg); color background:var(--bg); color::var(--txt); padding:var(--txt); padding:24px;}
+ 24px;}
+  .wrap{max-width: .wrap{max-width:1000px1000px; margin:; margin:0 auto;}
+0 auto;}
+  header{  header{display:display:flex; justifyflex; justify-content:space-content:space-between;-between; align align-items:flex-end-items:flex-end; border; border-bottom:-bottom:11px solid var(--line);px solid var(--line); padding-bottom:16px; padding-bottom:16px; margin-bottom margin-bottom:24:24px;}
+ px;}
+  h h1{font1{font-size:-size:26px; background26px; background:linear-gradient(90:linear-gradient(90degdeg,#,#38bdf838bdf8,#818cf,#818cf88);); - -webkitwebkit-back-backgroundground-cl-clipip:text; background-clip:text:text; background-clip:text; color:transparent;}
+  .sub; color:transparent;}
+  .sub{color:{color:var(--var(--mmuteduted); font); font-size-size:14:14px; margin-top:4pxpx; margin-top:4px;}
+  .updated{color:;}
+  .updated{color:var(--muted); font-size:12pxvar(--muted); font-size:12px; text-align:right;}
+  .; text-align:right;}
+  .badge{display:inline-blockbadge{display:inline-block; padding:3; padding:3px px 1010px; borderpx; border-radius-radius:20px; font:20px; font-size:12px; background-size::var12px; background:var(--acc(--acc);); color:# color:#0420422222f;f; font-weight: font-weight:600;}
+600;}
+  .  .metricsmetrics{display:grid; grid{display:grid; grid-template-columns:repeat-template-columns:repeat(auto(auto-fit,min-fit,minmaxmax(180(180px,1px,1fr));fr)); gap gap:16:16px; margin-bottom:24px; margin-bottom:24px;}
+px;}
+  .m  .mcard{backgroundcard{background:var(--:var(--card); bordercard); border::1px solid var(--line);1px solid var(--line); border border-radius:14px; padding-radius:14px; padding:18:18px;}
+ px;}
+  . .mcard .label{colormcard .label{color:var(--muted);:var(--muted); font-size:13px;}
+ font-size:13px;}
+  .  .mcard .valuemcard .value{font-size:34px{font-size:34px; font-weight:700;; font-weight:700; margin-top margin-top:6px;}
+:6px;}
+  .mcard .delta  .mcard .delta{font-size:{font-size:1212pxpx; color:var; color:var(--m(--muteduted);); margin margin-top-top::44px;}
+px;}
+  h2{  h2{font-size:16px; margin:26font-size:16px; margin:26px 0 12pxpx 0 12px; color:var(--; color:var(--txttxt);}
+  .);}
+  .card{card{background:var(--card);background:var(--card); border:1px solid var border:1px solid var(--line(--line); border); border-radius:-radius:1414pxpx; padding; padding::1818px;}
+ px;}
+  table{width:100%; table{width:100%; border-collapse:collapse border-collapse:collapse; font-size:14; font-size:14px;}
+px;}
+   th{ th{color:var(--muted); textcolor:var(--muted); text-align-align:left; font-weight::left; font-weight:500; padding500; padding:10:10pxpx  8px; border8px; border-bottom:1px solid var(--line); font-bottom:1px solid var(--line); font-size-size:12:12px;}
+  td{paddingpx;}
+  td{padding:12:12px 8px 8px;px; border-bottom border-bottom:1:1px solid var(--line);px solid var(--line);}
+  tr}
+  tr::lastlast-child-child td td{border{border-bottom:none;}
+-bottom:none;}
+  .  .emptyempty{color:var{color:var(--muted); text-align:(--muted); text-align:center; paddingcenter; padding:26:26pxpx;; font font-size-size::1414px;}
+  .tag{px;}
+  .tag{display:inline-block; paddingdisplay:inline-block; padding:2:2pxpx  88pxpx;; border-radius: border-radius:66px; font-size:11px; font-size:11pxpx;; margin margin-right-right:6:6pxpx;}
+ ;}
+  . .t-greent-green{{background:background:rgba(52,211,153rgba(52,211,153,.15); color:var(--green);,.15); color:var(--green);}
+}
+   . .tt--amberamber{{backgroundbackground::rgrgbaba(251(251,,191,36,.15191); color,36,.15); color:var:var(--amber);}
+  .t-red{background:rgba(--amber);}
+  .t-red{background:rgba(248,(248,113,113,.113,113,.15); color:var(--15); color:var(--red);red);}
+}
+  .t  .t-blue{-blue{backgroundbackground:rgba:rgba(56,(56,189,248189,248,.,.1515); color:var); color:var(--acc);}
+  .sched(--acc);}
+  .sched{display:grid{display:grid; gap; gap:10:10px;}
+px;}
+   .srow{ .srow{displaydisplay:flex:flex; justify; justify-content:-content:space-betweenspace-between; align; align-items:-items:center;center; background: background:var(--card2); bordervar(--card2); border:1px solid var:1px solid var(--(--lineline);); border border-radius-radius::1010pxpx;; padding padding::1212pxpx  16px16px;}
+;}
+   . .srowsrow . .timetime{{fontfont-weight:-weight:700; min-width:70700; min-width:70px;}
+px;}
+   . .srowsrow .task .task{color{color::var(--txt); flexvar(--txt); flex:1:1; margin-left:; margin-left:14px;}
+  .s14px;}
+  .srow .st{color:var(--green); font-size:13px;}
+  .noterow .st{color:var(--green); font-size:13px;}
+  .note{background:rgba{background:rg(56,189,248,.08); border:1px solid var(--line); border-radiusba(56,189,248,.08); border:1px solid var(--line); border-radius:10:10px; padding:14px 16px; color:var(--mutedpx; padding:14px 16px; color:var(--muted);); font-size:13px; margin font-size:13-top:16px; line-height:1.px; margin-top:16px; line-height:1.7;}
+7;}
+  footer  footer{color:var{color:var(--muted); font-size:12px;(--muted); font-size:12px; text-align:center; margin-top text-align:center; margin-top:32:32pxpx;; padding-top:16 padding-top:px;16px; border-top: border-top1px solid var:1px solid var(--line);}
+</style(--line);}
+</style>
+</head>
+>
+</head>
+<body>
+<div class="wrap<body>
+<div class="wrap">
+  <header">
+  <header>
+    <div>
+     >
+    <div>
+      <h1>🧊  <h1>🧊 凍腦時間 · 頻道成效凍腦時間 · 頻道成效看板看板</h1>
+     </h1>
+      <div <div class=" class="subsub">">冷知識冷知識 YouTube 頻道 YouTube 頻道 · · 全自動經營 全自動經營</div>
+</div>
+        </div</div>
+   >
+    <div class=" <div class="updated">
+      <span class="updated">
+      <span class="badge">badge">AUTO</span><br>
+AUTO</span><br>
+      更新      更新：<span：<span id id="="ts">ts">——</span</span>
+   >
+    </div </div>
+  >
+  </header>
+
+ </header>
+
+  <div class <div class="="metricsmetrics">
+">
+        <div class<div class="mcard">="mcard"><div class="label">訂閱數</div><div class="label">訂閱數</div><div class<div class="value"="value" id="sub id="subs">0</divs">0</div><div><div class="delta">–</div></div>
+ class="delta">–</div>    <div class</div>
+    <div class="mcard="mcard"><div class=""><div class="label">label">影片數</div><div class影片數</div><div class="="value" id="value" id="vids">0</div><div class="delta">–vids">0</div><div class="delta">–</div></div>
+</div></div>
+    <div class="m    <div class="mcardcard"><div class="label">總"><div class="label">總觀看</div><div觀看</div><div class=" class="value"value" id=" id="views">0views">0</div></div><div<div class="delta">–</div></div>
+    <div class class="delta">–</div></div>
+    <div class="mcard="mcard"><div class="label">"><div class="label">今日今日新新片</div><div class片</div><div class="value" id="value" id="="todaytoday">0</div">0</div><div class="delta"><div class="delta" id="todaynote id="todaynote">待首">待首支支片片</div</div></div>
+ ></div>
+   </div>
+
+ </div>
+
+  <h2>📹  <h2>📹 最近影片最近影片</h2>
+  </h2>
+  <div class<div class="="card">
+    card">
+    <table>
+      <thead><tr><table>
+      <thead><tr><th>標<th>標題</th><th>題</th><th>上線上線時間</th><th>時間</th><th>觀看觀看</th></th><th>讚<th>讚</th></th><th><th>留言</th></tr留言</th></tr></thead></thead>
+      <tbody id>
+      <tbody id="vbody">
+        <tr><td colspan="5="vbody">
+        <tr><td colspan="5" class="empty">尚" class="empty">尚無影片 —無影片 — 首支排 首支排程 Short 程 Short 將將於於明日明日 09:07 09:07 自動 自動上上線</td線</td>></tr>
+      </tbody>
+</tr>
+      </tbody>
+    </table>
+      </table>
+  </div>
+
+  </div>
+
+  <h2>🤖<h2>🤖 自動經營 自動經營排程</h2>
+排程</h2>
+    <div<div class class="="cardcard s sched">
+    <div classched">
+    <div class="srow"><div="srow"><div class=" class="timetime">09:">09:0000</div><div</div><div class="task">🎲 class="task">🎲 隨機 Short #1 · 隨機 Short #1 · 自動 自動上上傳傳</div></div><div<div class="st class="st">">●● 運行中 運行中</div></div></div>
+   </div>
+    <div class=" srow"><div class<div class="srow"><div class="time="time">">14:00</div><div class="task">🎲14:00</div><div class="task">🎲 隨機 Short #2 · 隨機 Short #2 · 自動上傳 自動上傳</div</div>><div class<div class="st="st">● ">● 運行中</div運行中</div></div>
+    <div></div>
+    <div class="s class="srow"><div class="row"><div class="timetime">20:">20:00</div><div class00</div><div class="task="task">">🎲🎲  隨機隨機 Short Short #3 ·  #3 · 自動上傳</div><div class="st">自動上傳</div><div class="st">● 運行● 運行中</div></div中</div></div>
+>
+    <div    <div class="srow"><div class="srow"><div class class="="time">time">21:21:30</div30</div>><div class<div class="task">="task">📊 📊 數據追蹤數據追蹤（（當當天天新新片 + 頻片 + 頻道總覽）</div道總覽）</div><div class="st">● 運行中><div class="st">● 運行中</div</div></div>
+    ></div<div>
+    <div class="srow"> class="srow"><div<div class=" class="time">21:time">21:3535</div><div</div><div class="task">🔥 熱 class="task">🔥 熱門趨勢選門趨勢選題（題（美區美區 US  US 掃掃描）·描）· 自動上 自動上傳</div><div class傳</div><div class="st="st">">● 運行● 運行中</div></div中</div></div>
+>
+  </div>
+
+    </div>
+
+  <div class="note">
+   <div class="note">
+    💡 <b 💡 <b>>說明說明：</b：</b>本看板>本看板為為即時成效總即時成效總覽。覽。目前頻目前頻道為空道為空（（待待首首支支排排程程片上線片上線）。）。若要若要刷新刷新成效，成效，請說請說「更新「更新成效成效看板」，我會重新看板」，我會重新抓取抓取 YouTube YouTube 最新 最新數據並數據並更新此更新此頁。
+ 頁。
+   </div</div>
+
+  <footer>凍>
+
+  <footer>凍腦時間腦時間 · · 自動化 自動化經營看經營看板 · 由板 · 由 CRE CREAO 自動AO 自動產生</footer>
+</div>
+
+<script產生</footer>
+</div>
+
+<script>
+>
+  document.getElementById  document.getElementById('ts').textContent =('ts').textContent = new Date(). new Date().toLocaleString('zh-TtoLocaleString('zh-TWW', {timeZone:'Asia/T', {timeZone:'Asia/Taipei'});
+</scriptaipei'});
+</script>
+>
+</body</body>
+>
+</html</html>
+>
