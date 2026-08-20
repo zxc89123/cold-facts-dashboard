@@ -70,13 +70,13 @@
 
   <div class="section-title">📊 頻道總覽</div>
   <div class="metrics">
-    <div class="mcard accent"><div class="label">訂閱數</div><div class="value" id="subs">1</div></div>
-    <div class="mcard"><div class="label">影片數</div><div class="value" id="vids">4</div></div>
+    <div class="mcard accent"><div class="label">訂閱數</div><div class="value" id="subs">0</div></div>
+    <div class="mcard"><div class="label">影片數</div><div class="value" id="vids">1</div></div>
     <div class="mcard"><div class="label">總觀看</div><div class="value" id="views">0</div></div>
-    <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">3</div><div class="delta" id="todaynote">今天 3 支上線</div></div>
+    <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">0</div><div class="delta" id="todaynote">—</div></div>
     <div class="mcard"><div class="label">平均觀看/片</div><div class="value" id="avg">0</div></div>
     <div class="mcard"><div class="label">互動率</div><div class="value" id="eng">0%</div><div class="delta">(讚+留言)/觀看</div></div>
-    <div class="mcard accent"><div class="label">平均觀看時間</div><div class="value" id="avgdur">需重新登入</div><div class="delta">每晚瀏覽器讀取</div></div>
+    <div class="mcard accent"><div class="label">平均觀看時間</div><div class="value" id="avgdur">—</div><div class="delta">每晚瀏覽器讀取</div></div>
     <div class="mcard accent"><div class="label">平均觀看百分比</div><div class="value" id="avgpct">—</div><div class="delta">瀏覽器讀取</div></div>
     <div class="mcard"><div class="label">讚總數</div><div class="value" id="likes">0</div></div>
     <div class="mcard"><div class="label">留言總數</div><div class="value" id="comments">0</div></div>
@@ -99,21 +99,30 @@
   <div class="card">
     <table>
       <thead><tr><th>標題</th><th>上線時間</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">互動率</th></tr></thead>
-      <tbody id="vbody"><tr><td>地球上最強的生物？它連太空都擋不住 #shorts</td><td>2026/08/20 20:18</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr><tr><td>章魚居然有3顆心臟！血還是藍色的？</td><td>2026/08/20 14:07</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr><tr><td>蜂蜜永遠不會壞？！</td><td>2026/08/20 09:12</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr><tr><td>世上真的沒有兩枚一模一樣的指紋？</td><td>2026/08/19 22:02</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr></tbody>
+      <tbody id="vbody"><tr><td colspan="6" class="empty">尚無影片</td></tr></tbody>
     </table>
     <div class="tnote">📏 「平均觀看時間／平均觀看百分比」由每晚追蹤 Agent 透過瀏覽器讀取 YouTube Studio Analytics 取得。若顯示「需重新登入」，表示瀏覽器登入已過期，需重新登入後恢復。</div>
   </div>
 
   <h2>🤖 自動經營排程</h2>
   <div class="card sched">
-    <div class="srow"><div class="time">09:00</div><div class="task">🎲 隨機 Short #1 · 自動上傳</div><div class="st">● 運行中</div></div>
-    <div class="srow"><div class="time">14:00</div><div class="task">🎲 隨機 Short #2 · 自動上傳</div><div class="st">● 運行中</div></div>
-    <div class="srow"><div class="time">20:00</div><div class="task">🎲 隨機 Short #3 · 自動上傳</div><div class="st">● 運行中</div></div>
-    <div class="srow"><div class="time">週三 19:00</div><div class="task">📺 長片 #1（深度冷知識）· 自動上傳</div><div class="st">● 運行中</div></div>
-    <div class="srow"><div class="time">週六 12:00</div><div class="task">📺 長片 #2（深度冷知識）· 自動上傳</div><div class="st">● 運行中</div></div>
-    <div class="srow"><div class="time">21:30</div><div class="task">📊 數據追蹤（當天新片 + 頻道總覽）</div><div class="st">● 運行中</div></div>
-    <div class="srow"><div class="time">21:35</div><div class="task">🔥 熱門趨勢選題（美區 US 掃描）· 自動上傳</div><div class="st">● 運行中</div></div>
+    <div class="srow"><div class="time">09:00</div><div class="task">🎲 隨機 Short #1 · 自動上傳</div><div class="st">已設定</div></div>
+    <div class="srow"><div class="time">14:00</div><div class="task">🎲 隨機 Short #2 · 自動上傳</div><div class="st">已設定</div></div>
+    <div class="srow"><div class="time">20:00</div><div class="task">🎲 隨機 Short #3 · 自動上傳</div><div class="st">已設定</div></div>
+    <div class="srow"><div class="time">週三 19:00</div><div class="task">📺 長片 #1（深度冷知識）· 自動上傳</div><div class="st">已設定</div></div>
+    <div class="srow"><div class="time">週六 12:00</div><div class="task">📺 長片 #2（深度冷知識）· 自動上傳</div><div class="st">已設定</div></div>
+    <div class="srow"><div class="time">21:30</div><div class="task">📊 數據追蹤（當天新片 + 頻道總覽）</div><div class="st">已設定</div></div>
+    <div class="srow"><div class="time">21:35</div><div class="task">🔥 熱門趨勢選題（美區 US 掃描）· 自動上傳</div><div class="st">已設定</div></div>
   </div>
+  <div class="note">※ 上表為「已設定的排程」；實際是否已觸發/成功，依各影片在頻道的發布狀態為準（見「今日出片時段追蹤」）。本頁無法驗證排程即時執行狀態，故不宣稱「運行中」。</div>
+
+  <h2>🔁 流程監控</h2>
+  <div class="card sched">
+    <div class="srow"><div class="time">選題</div><div class="task" id="ps_sel">…</div><div class="st" id="pss_sel">…</div></div>
+    <div class="srow"><div class="time">腳本+配音+生圖</div><div class="task" id="ps_fac">…</div><div class="st" id="pss_fac">…</div></div>
+    <div class="srow"><div class="time">數據追蹤</div><div class="task" id="ps_trk">…</div><div class="st" id="pss_trk">…</div></div>
+  </div>
+  <div class="note" id="ps_note">流程監控由追蹤 Agent 每晚依實際執行紀錄填入（選題/影片工廠/數據追蹤最近執行狀態與時間）。若顯示「待更新」，表示該環節尚未取得本次執行資料。</div>
 
   <h2>🎨 本月剩餘 Credit 監控</h2>
   <div class="card sched">
@@ -125,7 +134,7 @@
 
   <div class="section-title">🛠️ 策略自動套用</div>
   <div class="card sched">
-    <div class="srow"><div class="time">開關</div><div class="task">每週策略檢討後自動調整影片工廠排程（長/短片格式、最佳主題）</div><div class="st">● 啟用</div></div>
+    <div class="srow"><div class="time">開關</div><div class="task">每週策略檢討後自動調整影片工廠排程（長/短片格式、最佳主題）</div><div class="st">依設定</div></div>
     <div class="srow"><div class="time">守門</div><div class="task">總觀看 ≥ 500 · 有數據影片 ≥ 5 · 某格式領先 ≥ 30%</div><div class="st" id="guardstate">檢視中…</div></div>
   </div>
 
@@ -154,6 +163,33 @@
   // 策略改動紀錄快照（開啟時會以 GitHub raw 即時更新）
   let STRAT = [];
   if (!Array.isArray(STRAT)) STRAT = [];
+  // 流程監控：由追蹤 Agent 依實際執行紀錄填入
+  let PIPELINE = {"sel":{"status":"待更新"},"fac":{"status":"待更新"},"trk":{"status":"待更新"}};
+  if (!PIPELINE || typeof PIPELINE !== 'object') PIPELINE = {};
+
+  function renderPipeline() {
+    const rows = [
+      {k:'sel', label:'選題'},
+      {k:'fac', label:'腳本+配音+生圖'},
+      {k:'trk', label:'數據追蹤'}
+    ];
+    rows.forEach(r => {
+      const tEl = document.getElementById('ps_'+r.k);
+      const sEl = document.getElementById('pss_'+r.k);
+      if (!tEl || !sEl) return;
+      const info = PIPELINE[r.k];
+      if (info && info.status && info.status !== '待更新') {
+        tEl.textContent = (info.detail || info.status) + (info.time ? '（'+info.time+'）' : '');
+        const ok = /成功|已|完成|正常|success/i.test(info.status);
+        sEl.textContent = ok ? '✓ '+info.status : '▲ '+info.status;
+        sEl.style.color = ok ? 'var(--green)' : 'var(--yellow)';
+      } else {
+        tEl.textContent = '待追蹤更新';
+        sEl.textContent = '—';
+        sEl.style.color = 'var(--muted)';
+      }
+    });
+  }
 
   function renderChanges() {
     const tbody = document.getElementById('changelog');
@@ -273,9 +309,11 @@
     let liveViews = null;
     if (!YT_KEY || YT_KEY.indexOf('__YOUTUBE') === 0) {
       document.getElementById('liveBadge').textContent = '快照';
+      renderPipeline();
       renderTrend(null);
       return; // 未設定 API key，保留快照
     }
+    renderPipeline();
     try {
       const ch = await fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id='+CHANNEL_ID+'&key='+YT_KEY+'&cb='+Date.now(), {cache:'no-store'}).then(r=>r.json());
       const st = ch.items && ch.items[0] && ch.items[0].statistics || {};
@@ -321,6 +359,7 @@
     }
     renderTrend(liveViews);
     loadChanges(liveViews);
+    renderPipeline();
   }
   load();
 </script>
