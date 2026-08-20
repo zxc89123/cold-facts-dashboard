@@ -115,14 +115,13 @@
     <div class="srow"><div class="time">21:35</div><div class="task">🔥 熱門趨勢選題（美區 US 掃描）· 自動上傳</div><div class="st">● 運行中</div></div>
   </div>
 
-  <h2>🎨 本月生圖配額監控</h2>
+  <h2>🎨 本月剩餘 Credit 監控</h2>
   <div class="card sched">
-    <div class="srow"><div class="time">本月影片</div><div class="task" id="qm_videos">…</div><div class="st" id="qm_status">…</div></div>
-    <div class="srow"><div class="time">生圖用量</div><div class="task" id="qm_used">…</div><div class="st" id="qm_pct">…</div></div>
-    <div class="srow"><div class="time">生圖剩餘</div><div class="task" id="qm_left">…</div><div class="st">配額 <span id="qm_quota">420</span> 張</div></div>
-    <div class="srow"><div class="time">預估可再產出</div><div class="task" id="qm_proj">…</div><div class="st">依目前節奏</div></div>
+    <div class="srow"><div class="time">剩餘 Credit</div><div class="task" id="qm_balance" data-balance="0">…</div><div class="st" id="qm_status">…</div></div>
+    <div class="srow"><div class="time">本月影片</div><div class="task" id="qm_videos">…</div><div class="st" id="qm_pct">…</div></div>
+    <div class="srow"><div class="time">生圖用量估算</div><div class="task" id="qm_used">…</div><div class="st">本月影片×3.8 張</div></div>
   </div>
-  <div class="note" id="qm_note">生圖配額為估算值（依每日上限反推），請依實際 AI 生圖 credit 調整（修改 JS 中 QUOTA_IMG_MONTH）。本月影片取自最近影片清單。</div>
+  <div class="note" id="qm_note">「剩餘 Credit」由追蹤 Agent 每晚以側邊欄實際餘額填入（佔位符 0）。若顯示「未填入」表示該晚尚未更新，或 Agent 無法讀取餘額；本區不猜測、不偽造餘額。</div>
 
   <div class="section-title">🛠️ 策略自動套用</div>
   <div class="card sched">
@@ -212,7 +211,6 @@
       }
     });
   }
-  const QUOTA_IMG_MONTH = 420;   // 每月 AI 生圖配額（估算，依每日上限反推；請依實際 credit 調整）
   const IMG_PER_VIDEO = 3.8;     // 每片平均生圖張數（Shorts~3.5、長片~6.5 加權）
   function renderQuota(videos) {
     const ym = new Date();
@@ -224,19 +222,21 @@
       if (dk===key) monthVideos++;
     });
     const used = Math.round(monthVideos * IMG_PER_VIDEO);
-    const left = Math.max(0, QUOTA_IMG_MONTH - used);
-    const proj = Math.floor(left / IMG_PER_VIDEO);
-    const pct = Math.round(used/QUOTA_IMG_MONTH*100);
-    document.getElementById('qm_quota').textContent = QUOTA_IMG_MONTH;
     document.getElementById('qm_videos').textContent = monthVideos + ' 支（本月，取自最近清單）';
     document.getElementById('qm_used').textContent = '≈ ' + used + ' 張';
-    document.getElementById('qm_pct').textContent = '已用 ' + pct + '%';
-    document.getElementById('qm_left').textContent = '≈ ' + left + ' 張';
-    document.getElementById('qm_proj').textContent = '≈ ' + proj + ' 支';
+    document.getElementById('qm_pct').textContent = '估算';
+    const bal = Number(document.getElementById('qm_balance').dataset.balance);
+    const balEl = document.getElementById('qm_balance');
     const st = document.getElementById('qm_status');
-    if (pct < 80) { st.textContent = '● 正常'; st.style.color='var(--green,#16a34a)'; }
-    else if (pct < 95) { st.textContent = '▲ 接近上限'; st.style.color='var(--yellow,#eab308)'; }
-    else { st.textContent = '● 已近滿'; st.style.color='var(--red,#ef4444)'; }
+    if (bal && bal > 0) {
+      balEl.textContent = bal.toLocaleString('zh-TW') + ' credit';
+      st.textContent = '● 實際餘額';
+      st.style.color = 'var(--green,#16a34a)';
+    } else {
+      balEl.textContent = '未填入';
+      st.textContent = '待追蹤更新';
+      st.style.color = 'var(--muted,#9ca3af)';
+    }
   }
   function fmt(n){ n = Number(n); if(isNaN(n)) return '0'; if(n>=10000) return (n/10000).toFixed(1)+'萬'; return n.toLocaleString('zh-TW'); }
 
