@@ -70,13 +70,13 @@
 
   <div class="section-title">📊 頻道總覽</div>
   <div class="metrics">
-    <div class="mcard accent"><div class="label">訂閱數</div><div class="value" id="subs">0</div></div>
-    <div class="mcard"><div class="label">影片數</div><div class="value" id="vids">1</div></div>
+    <div class="mcard accent"><div class="label">訂閱數</div><div class="value" id="subs">1</div></div>
+    <div class="mcard"><div class="label">影片數</div><div class="value" id="vids">4</div></div>
     <div class="mcard"><div class="label">總觀看</div><div class="value" id="views">0</div></div>
-    <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">0</div><div class="delta" id="todaynote">—</div></div>
+    <div class="mcard"><div class="label">今日新片</div><div class="value" id="today">3</div><div class="delta" id="todaynote">今天 3 支上線</div></div>
     <div class="mcard"><div class="label">平均觀看/片</div><div class="value" id="avg">0</div></div>
     <div class="mcard"><div class="label">互動率</div><div class="value" id="eng">0%</div><div class="delta">(讚+留言)/觀看</div></div>
-    <div class="mcard accent"><div class="label">平均觀看時間</div><div class="value" id="avgdur">—</div><div class="delta">每晚瀏覽器讀取</div></div>
+    <div class="mcard accent"><div class="label">平均觀看時間</div><div class="value" id="avgdur">需重新登入</div><div class="delta">每晚瀏覽器讀取</div></div>
     <div class="mcard accent"><div class="label">平均觀看百分比</div><div class="value" id="avgpct">—</div><div class="delta">瀏覽器讀取</div></div>
     <div class="mcard"><div class="label">讚總數</div><div class="value" id="likes">0</div></div>
     <div class="mcard"><div class="label">留言總數</div><div class="value" id="comments">0</div></div>
@@ -99,7 +99,7 @@
   <div class="card">
     <table>
       <thead><tr><th>標題</th><th>上線時間</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">互動率</th></tr></thead>
-      <tbody id="vbody"><tr><td colspan="6" class="empty">尚無影片</td></tr></tbody>
+      <tbody id="vbody"><tr><td>地球上最強的生物？它連太空都擋不住 #shorts</td><td>2026/08/20 20:18</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr><tr><td>章魚居然有3顆心臟！血還是藍色的？</td><td>2026/08/20 14:07</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr><tr><td>蜂蜜永遠不會壞？！</td><td>2026/08/20 09:12</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr><tr><td>世上真的沒有兩枚一模一樣的指紋？</td><td>2026/08/19 22:02</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0%</td></tr></tbody>
     </table>
     <div class="tnote">📏 「平均觀看時間／平均觀看百分比」由每晚追蹤 Agent 透過瀏覽器讀取 YouTube Studio Analytics 取得。若顯示「需重新登入」，表示瀏覽器登入已過期，需重新登入後恢復。</div>
   </div>
@@ -149,7 +149,7 @@
   const YT_KEY = 'AIzaSyBtIQkSpOwkL1_FxkC_c-wt4e6tAehfnLs';      // 由 CREAO 填入 YouTube Data API key
   const CHANNEL_ID = 'UCyoNtzqTWQ70yEhwZuSesBQ';
   // 歷史快照：[[date, total_views], ...]，由每日追蹤累積填入
-  let VIEW_HISTORY = [["2026-08-19",0]];
+  let VIEW_HISTORY = [["2026-08-19", 0], ["2026-08-20", 0]];
   if (!Array.isArray(VIEW_HISTORY)) VIEW_HISTORY = [];
   // 策略改動紀錄快照（開啟時會以 GitHub raw 即時更新）
   let STRAT = [];
