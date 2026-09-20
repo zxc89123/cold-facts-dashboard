@@ -22,5 +22,11 @@
     "applied": false,
     "action": "no-change",
     "detail": "守門未過：近7天總觀看164<500，且近30天46支影片全為Shorts（時長15-56秒，無長片），無長片格式可比（需某格式平均觀看/互動領先另一格式>=30%），故保守不自動改排程；頻道總觀看3357（近7天+1336），top_topic=人體科學（胃酸，單片62觀看），best_format=Shorts，engagement=2.44%，subscribers=7"
+  },
+  {
+    "date": "2026-09-20",
+    "applied": false,
+    "action": "no-change",
+    "detail": "守門未過：近7天26支影片全為Shorts（時長19-47秒，無長片），無法比較『某格式平均觀看/互動率領先另一格式>=30%』，故保守不自動改排程；頻道總觀看6930（近7天+3543），top_topic=人體科學（胃酸，單片662觀看），best_format=Shorts，engagement=1.25%（讚22、留言0），subscribers=14"
   }
 ]
